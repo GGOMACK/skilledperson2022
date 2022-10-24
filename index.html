@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+    <title>시간표</title>
+    <style>
+    table{
+      Width: 100%;
+      border-top: 1px solid #444444;
+      border-collapse: collapse;
+    }
+    th, td {
+      border-bottom: 1px solid #444444;
+      padding: 10px;
+      text-align: center;
+    }
+    th{
+      background-color: #fbceb1;
+    }
+    </style>
+    <body>
+        <h1>시간표</h1>
+        <table>
+            <thead>
+            <tr>
+              <th></th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th>
+            </tr>
+            </thead>
+ 
+            <tbody>
+            <tr>
+              <td>1</td><td>네트워크</td><td>체육</td><td>컴퓨터구조A</td><td>디자인일반</td><td>음감비</td>
+            </tr>
+ 
+            <tr>
+              <td>2</td><td>네트워크</td><td>컴퓨터구조B</td><td>수학</td><td>디자인일반</td><td>국어A</td>
+            </tr>
+ 
+            <tr>
+              <td>3</td><td>컴퓨터구조B</td><td>통합사회B</td><td>프로그래밍</td><td>영어A</td><td>수학</td>
+            </tr>
+ 
+            <tr>
+              <td>4</td><td>수학</td><td>영어A</td><td>프로그래밍</td><td>통합사회A</td><td>통합과학</td>
+            </tr>
+ 
+            <tr>
+              <td>5</td><td>프로그래밍</td><td>통합사회C</td><td>영어B</td><td>보건</td><td>네트워크</td>
+            </tr>
+ 
+            <tr>
+              <td>6</td><td>프로그래밍</td><td>진로</td><td>국어B</td><td>통합과학</td><td>자율활동</td>
+            </tr>
+ 
+            <tr>
+              <td>7</td><td>국어A</td><td>통합과학</td><td>동아리</td><td>체육</td><td></td>
+            </tr>
+            </tbody>
+        </table>
+        <table>
+          <script>
+            let xhttp = new XMLHttpRequest();
+            xhttp.open("GET", "json.json", true);
+            xhttp.onreadystatechange = function() {
+      if(this.readyState == 4 && this.status == 200) {
+        //readyState가 4라는 것은 요청에 대한 준비가 되었고 응답할 준비가 되었다는 말이다.
+        //status가 200이라는 것은 http응답 코드가 200이라는 것이다.
+        let storage = JSON.parse(this.response);
+        //response메소드를 통해 JSON 파일에 접근할 수 있다.
+        //잘 이해가 안된다면 console.log(this.response)를 대신 넣어서 무엇이 출력되는지 보자 
+        for(i in storage.data) {//JSON파일 안에있는 data를 처음부터 끝까지 읽는 과정이다.
+          let tr = document.createElement('tr');//tr태그를 만들고
+          for(let j = 0; j < 4; j++) {
+            //한 사람당 정보가 이름, 전화번호, 이메일, 회사 이렇게 4개 있다.
+            //따라서 4번 반복하는 for문을 만들어 각각 td태그에 넣어주자.
+            let td = document.createElement('td');
+            td.innerHTML = storage.data[i][j];//i번째 사람의 j(이름, 전화번호 등)정보
+            tr.appendChild(td);
+            //tr태그에 차례대로 붙여준다.
+          }
+          document.querySelector("tbody").appendChild(tr);//tbody안에 또 붙여준다.
+        }
+      }
+    };
+                xhttp.send();
+          </script>
+        </table>
+    </body>
+</html>
